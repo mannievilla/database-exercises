@@ -40,7 +40,7 @@ WHERE name = 'Nevermind'
 -- 8
 SELECT name
 FROM albums
-WHERE release_date BETWEEN 1989 AND 1999
+WHERE release_date BETWEEN 1990 AND 1999
 ;
 -- The Bodyguard
 -- Jagged Little Pill
