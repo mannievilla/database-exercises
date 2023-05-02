@@ -1,20 +1,28 @@
+-- 3
 SHOW databases;
 
+-- 4
 USE albums_db;
 
+-- 5
 SELECT database();
 
+-- 6
 SHOW tables;
 
+-- 7
 USE employees;
 
+-- 8
 SELECT database();
 
+-- 9
 SHOW tables;
 
+-- 10
+DESCRIBE employees.employees;
 
-
-
+-- 11
 -- Which table(s) do you think contain a numeric type column? 
 DESCRIBE employees.departments;
 DESCRIBE employees.dept_emp;
@@ -24,16 +32,20 @@ DESCRIBE employees.salaries;
 DESCRIBE employees.titles;
 -- ALL except the departments
 
+-- 12
 -- Which table(s) do you think contain a string type column?
 -- all except for salary table
 
+-- 13
 -- Which table(s) do you think contain a date type column?
 -- ALL except for the department
 
+
+-- 14
 -- -- What is the relationship between the employees and the departments tables?
 -- There is no realtionship you have to use dept_emp and dept_manager to tie employees to depraprtments
 
-
+-- 15
 -- Show the SQL that created the dept_manager table. Write the SQL it takes to show this as your exercise solution.
 SHOW CREATE TABLE dept_manager;
 -- SHOW CREATE TABLE departments;
