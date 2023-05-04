@@ -47,10 +47,11 @@ GROUP BY 1
 ;
 
 -- 7
-SELECT first_name, COUNT(*) AS no_of_first_names
+SELECT gender, first_name, COUNT(*) AS no_of_first_names
 FROM employees
 WHERE first_name IN ('Irena', 'Vidya', 'Maya')
-GROUP BY 1
+GROUP BY 1, 2
+ORDER BY 3 DESC
 ;
 
 -- 8
@@ -118,8 +119,5 @@ FROM salaries
 WHERE salary BETWEEN 80000 AND 90000
 GROUP BY emp_no
 ;
-
-
-
 
 
