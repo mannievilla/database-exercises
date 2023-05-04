@@ -39,3 +39,5 @@ SELECT first_name, last_name, CONCAT(
 	SUBSTR(hire_date, 6, 10)
 	) AS username
 FROM employees;
+
+
