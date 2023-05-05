@@ -95,7 +95,7 @@ ORDER BY 1
 
 -- 5
 SELECT d.dept_name AS 'Department Name', 
-	CONCAT(e.first_name, ' ', e.last_name) AS 'Department Manager',
+	CONCAT(e.first_name, ' ', e.last_name) AS 'Name',
     s.salary AS 'Salary'
 FROM employees AS e
 	JOIN dept_manager AS dp ON
@@ -112,24 +112,24 @@ ORDER BY 1
 
 
 
-SELECT d.dept_name AS 'Department Name', 
-	CONCAT(e.first_name, ' ', e.last_name) AS 'Department Manager',
-    s.salary AS 'Salary'
-FROM employees AS e
-	JOIN dept_manager AS dp ON
-		e.emp_no = dp.emp_no
-	JOIN departments AS d ON
-		dp.dept_no = d.dept_no
-	JOIN salaries AS s ON
-		e.emp_no = s.emp_no
-WHERE dp.to_date LIKE '999%' AND s.to_date LIKE '9%'
-ORDER BY 1
-;
+-- SELECT d.dept_name AS 'Department Name', 
+-- 	CONCAT(e.first_name, ' ', e.last_name) AS 'Department Manager',
+--     s.salary AS 'Salary'
+-- FROM employees AS e
+-- 	JOIN dept_manager AS dp ON
+-- 		e.emp_no = dp.emp_no
+-- 	JOIN departments AS d ON
+-- 		dp.dept_no = d.dept_no
+-- 	JOIN salaries AS s ON
+-- 		e.emp_no = s.emp_no
+-- WHERE dp.to_date LIKE '999%' AND s.to_date LIKE '9%'
+-- ORDER BY 1
+-- ;
 
 
 
 -- 6
-SELECT d.dept_no, d.dept_name, COUNT(*)
+SELECT d.dept_no, d.dept_name, COUNT(*) AS num_employees
 FROM departments AS d
 JOIN dept_emp AS de ON
 	d.dept_no = de.dept_no
@@ -142,7 +142,7 @@ ORDER BY 1
 
 
 -- 7
-SELECT d.dept_name, AVG(s.salary)
+SELECT d.dept_name, AVG(s.salary) AS 'average_salary'
 FROM departments AS d
 JOIN dept_emp AS de ON
 	d.dept_no = de.dept_no
@@ -196,13 +196,13 @@ LIMIT 1
 
 
 -- 10
-SELECT d.dept_name, AVG(s.salary)
+SELECT d.dept_name, ROUND(AVG(s.salary), 0) AS 'average_salary' -- d.dept_name, s.salary, de.emp_no
 FROM departments AS d
 JOIN dept_emp AS de ON
 	d.dept_no = de.dept_no
 JOIN salaries AS s ON
 	de.emp_no = s.emp_no
-WHERE de.to_date LIKE '999%' AND s.to_date LIKE '9%'
+-- WHERE de.to_date LIKE '999%' AND s.to_date LIKE '999%'
 GROUP BY 1
 ORDER BY 2 DESC
 -- ORDER BY 1
@@ -210,7 +210,7 @@ ORDER BY 2 DESC
 
 
 
-SELECT d.dept_name, AVG(s.salary)
+SELECT employess.first_name
 FROM departments AS d
 JOIN dept_emp AS de ON
 	d.dept_no = de.dept_no
@@ -220,10 +220,8 @@ JOIN employees ON
 	de.emp_no = employees.emp_no
 JOIN employees ON
 	dm.emp_no = employees.emp_no
-JOIN salaries AS s ON
-	employees.emp_no = s.emp_no
-WHERE de.to_date LIKE '999%' AND employees.to_date LIKE '9%'
-GROUP BY d.dept_name
-ORDER BY 1 DESC
+WHERE employees.to_date LIKE '9%'
+GROUP BY e.first_name
+-- ORDER BY 1 DESC
 ;
 
