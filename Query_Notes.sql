@@ -369,3 +369,82 @@ WHERE cost_to_customer_per_qty > 4
 GROUP BY 1 -- GROUP BY customer_id - can also use a number to represent the select statemnt according to order.
 HAVING high_end_purchases < 100
 ;
+
+
+
+USE farmers_market;
+
+DESCRIBE vendor_booth_assignments;
+-- has three primary keys
+
+SELECT * 
+FROM vendor_booth_assignments;
+
+SHOW CREATE TABLE vendor_booth_assignments;
+
+
+-- CREATE TABLE `vendor_booth_assignments` (
+--   `vendor_id` int NOT NULL,
+--   `booth_number` int NOT NULL,
+--   `market_date` date NOT NULL,
+--   PRIMARY KEY (`vendor_id`,`booth_number`,`market_date`),
+--   KEY `market_date_fk_idx` (`market_date`),
+--   KEY `booth_number_fk_idx` (`booth_number`),
+--   CONSTRAINT `booth_number_fk` FOREIGN KEY (`booth_number`) REFERENCES `booth` (`booth_number`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+--   CONSTRAINT `market_date_fk` FOREIGN KEY (`market_date`) REFERENCES `market_date_info` (`market_date`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+--   CONSTRAINT `vendor_id_fk` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`vendor_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+DESCRIBE vendor;
+
+SHOW CREATE TABLE vendor;
+
+
+-- CREATE TABLE `vendor` (
+--   `vendor_id` int NOT NULL AUTO_INCREMENT,
+--   `vendor_name` varchar(45) NOT NULL,
+--   `vendor_type` varchar(45) NOT NULL,
+--   `vendor_owner_first_name` varchar(45) NOT NULL,
+--   `vendor_owner_last_name` varchar(45) NOT NULL,
+--   PRIMARY KEY (`vendor_id`),
+--   UNIQUE KEY `vendor_id_UNIQUE` (`vendor_id`),
+--   UNIQUE KEY `vendor_name_UNIQUE` (`vendor_name`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+SELECT *
+FROM vendor;
+
+
+SELECT *
+FROM vendor_booth_assignments
+JOIN vendor ON 
+	vendor_booth_assignments.vendor_id = vendor.vendor_id;
+
+
+SELECT *
+FROM vendor_booth_assignments
+JOIN vendor ON 
+	vendor_booth_assignments.vendor_id = vendor.vendor_id
+JOIN booth ON 
+	booth.booth_number = vendor_booth_assignments.booth_number
+;
+-- i prefer to write this way versus the above because the order of the table joiner, I like it be in the middle. --
+SELECT *
+FROM vendor AS v
+JOIN vendor_booth_assignments AS vba ON 
+	v.vendor_id = vba.vendor_id
+JOIN booth AS b ON 
+	b.booth_number = vba.booth_number
+;
+
+
+
+DESCRIBE booth;
+SHOW CREATE TABLE booth;
+
+
+
+
+
