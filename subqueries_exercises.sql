@@ -123,7 +123,9 @@ GROUP BY e.emp_no, s.salary
 SELECT MAX(salary)
 FROM salaries
 ;
-
+SELECT STD(salary)
+FROM salaries
+;
 
 
 

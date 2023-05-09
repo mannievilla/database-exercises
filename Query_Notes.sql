@@ -446,5 +446,160 @@ SHOW CREATE TABLE booth;
 
 
 
+USE farmers_market;
+
+-- does not work
+SELECT *
+FROM market_date_info
+WHERE market_min_temp < AVG(market_min_temp);
+
+-- formula for avgerage minimum temp
+-- used in the  subquery
+SELECT AVG(market_min_temp) -- 
+FROM market_date_info;
+
+-- coded number for average but we want it to be dynamic
+SELECT *
+FROM market_date_info
+WHERE market_min_temp < 54.32258064516129;
+
+-- SCALAR SUBQUERY combing the 
+
+SELECT * 
+FROM market_date_info
+WHERE market_min_temp > (
+						SELECT AVG(market_min_temp)
+                        FROM market_date_info);
+                        
+-- COLUMN SUBQUERY
+
+-- lETS fin all vbendors that worked from 2019-04-03
+
+SELECT * 
+FROM vendor_booth_assignments;
+
+SELECT * 
+FROM vendor;
+
+
+SELECT * 
+FROM vendor_booth_assignments
+WHERE market_date = '2019-04-13'
+;
+
+
+SELECT * 
+FROM vendor
+WHERE vendor_id IN (SELECT vendor_id
+FROM vendor_booth_assignments
+WHERE market_date = '2019-04-13');
+
+
+-- ROW SUBQUERY
+
+SELECT *
+FROM customer_purchases;
+
+
+-- find the first customer who bought soomething at the market
+
+
+-- all purchases a
+SELECT *
+FROM customer_purchases
+ORDER BY market_date, transaction_time;
+
+
+-- query for the first customer who purchased somethin
+SELECT customer_id
+FROM customer_purchases
+ORDER BY market_date, transaction_time
+LIMIT 1;
+
+
+SELECT customer_first_name, customer_last_name
+FROM customer
+WHERE customer_id = (
+						SELECT customer_id
+						FROM customer_purchases
+						ORDER BY market_date, transaction_time
+						LIMIT 1);
+                        
+                        
+-- TABLE SUBQUERY
+
+
+-- lets get purchase of all customers who live in 22821 zip code
+
+-- look at table
+SELECT *
+FROM customer;
+
+
+SELECT * 
+FROM customer
+WHERE customer_zip = '22821'
+;
+
+-- original way to solve
+SELECT *
+FROM customer
+JOIN customer_purchases USING (customer_id)
+WHERE customer.customer_zip = 22821
+;
+
+
+
+SELECT *
+FROM (
+		SELECT * 
+		FROM customer
+		WHERE customer_zip = '22821') AS c
+JOIN customer_purchases AS cp ON cp.customer_id = c.customer_id
+;
+
+
+SELECT * 
+FROM customer_purchases AS cp
+JOIN (
+		SELECT * 
+		FROM customer
+		WHERE customer_zip = '22821') AS c ON cp.customer_id = c.customer_id
+;
+
+
+
+
+-- TEMPORARY TABLES ---
+
+USE quintela_2245;
+
+CREATE TEMPORARY TABLE my_numbers_2(
+	n INT UNSIGNED NOT NULL -- wht does unsigned mean?
+);
+
+SELeCT * 
+FROM my_numbers_2;
+
+INSERT INTO my_numbers_2(n) VALUES (1), (2), (3), (4), (5);
+
+
+CREATE TEMPORARY TABLE student_names( 
+	first_name VARCHAR(50),
+    last_name VARCHAR(50)
+);
+
+SELECT *
+FROM student_names;
+
+
+INSERT INTO student_names(first_name, last_name) VALUES ('Ryan', 'McCall'), ('Emanuel', 'Villa'), ('Joe', 'Schmo');
+
+
+SELECT * FROM my_numbers_2;
+
+UPDATE my_numbers_2 SET n = n + 1;
+
+
 
 
