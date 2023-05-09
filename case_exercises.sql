@@ -58,15 +58,20 @@ GROUP BY 2;
 SELECT *
 FROM departments;
 
-SELECT d.dept_name, AVG(salary)
+SELECT 
 			CASE
 			WHEN d.dept_name = 'Research' OR d.dept_name = 'Development' THEN 'R&D'
 			WHEN d.dept_name = 'Sales' OR d.dept_name = 'Marketing' THEN 'Sales & Marketing'
-			WHEN d.dept_name = 'Quality Management' OR d.dept_name = 'Production'THEN 'Prod & QM'
-		END AS 'Department Averages'
+			WHEN d.dept_name = 'Quality Management' OR d.dept_name = 'Production' THEN 'Prod & QM'
+            WHEN d.dept_name = 'Finance' OR d.dept_name = 'Human Resources' THEN 'Finance & HR'
+            ELSE d.dept_name
+		END AS dept_grp, AVG(salary)
 FROM departments AS d 
 JOIN dept_emp AS de ON
 	d.dept_no = de.dept_no
 JOIN salaries AS s ON
-	s.emp_no = d.dept_no)
+	s.emp_no = de.emp_no
+WHERE de.to_date > NOW() AND s.to_date > NOW()
+GROUP BY dept_grp
+;
 
